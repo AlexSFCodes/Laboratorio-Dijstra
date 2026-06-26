@@ -91,13 +91,11 @@ public class Grafo {
 
             NodoPrioridad actual = cola.poll();
 
-            /*
-             * TODO:
-             * ¿Qué debería ocurrir si el nodo actual
-             * ya fue procesado anteriormente?
-             */
-
             String nombreActual = actual.getNombre();
+
+            if (visitados.contains(nombreActual)) {
+                continue;
+            }
 
             visitados.add(nombreActual);
 
@@ -108,26 +106,14 @@ public class Grafo {
 
                 String vecino = arista.getDestino();
 
-                /*
-                 * TODO:
-                 * Calcular el costo alternativo para llegar
-                 * al vecino pasando por el nodo actual.
-                 */
+                int nuevoCosto = distancia.get(nombreActual)
+                        + arista.getConsumo();
 
-                int nuevoCosto = 0; // Reemplazar.
-
-                /*
-                 * TODO:
-                 * Si encontramos una ruta mejor:
-                 *   1. Actualizar la distancia.
-                 *   2. Registrar el predecesor.
-                 *   3. Insertar el vecino en la PriorityQueue.
-                 *
-                 * Pregunta:
-                 * ¿Por qué volvemos a insertar el nodo
-                 * aunque ya pudiera estar en la cola?
-                 */
-
+                if (nuevoCosto < distancia.get(vecino)) {
+                    distancia.put(vecino, nuevoCosto);
+                    anterior.put(vecino, nombreActual);
+                    cola.add(new NodoPrioridad(vecino, nuevoCosto));
+                }
             }
         }
 
@@ -137,15 +123,11 @@ public class Grafo {
 
         LinkedList<String> ruta = new LinkedList<>();
 
-        /*
-         * TODO:
-         * Reconstruir la ruta utilizando el mapa
-         * 'anterior'.
-         *
-         * Pista:
-         * Comienza desde el destino y vaya retrocediendo
-         * hasta llegar al origen.
-         */
+        String nodo = destino;
+        while (nodo != null) {
+            ruta.addFirst(nodo);
+            nodo = anterior.get(nodo);
+        }
 
         return new ResultadoRuta(
                 ruta,

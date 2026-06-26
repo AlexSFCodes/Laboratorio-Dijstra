@@ -25,15 +25,6 @@ public class NodoPrioridad implements Comparable<NodoPrioridad> {
 
     @Override
     public int compareTo(NodoPrioridad otro) {
-
-        // TODO:
-        // Complete este método para que la PriorityQueue
-        // siempre entregue primero el nodo con MENOR
-        // costo acumulado.
-        //
-        // Pregunta:
-        // ¿Por qué NO queremos que el mayor costo salga primero?
-
-        return 0; // Reemplazar.
+        return Integer.compare(this.costoAcumulado, otro.costoAcumulado);
     }
 }
